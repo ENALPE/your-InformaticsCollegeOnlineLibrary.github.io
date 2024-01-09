@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informatics College Online Library</title>
+    <link rel="stylesheet" href="Online Library1.css">
+    <link rel="stylesheet" href="Three lines.css">
+    <style>
+        .lesson-content {
+            background-color: #87CEEB;
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        .trending-book {
+            border: 2px solid #87CEEB;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+
+        .trending-books {
+            margin-top: 40px;
+            border: 2px solid #87CEEB;
+            border-radius: 8px;
+            padding: 10px;
+        }l
+
+        .book-title,
+        .book-link {
+            display: none;
+            margin: 0;
+        }
+
+        .subject-list li {
+            border: 2px solid #87CEEB;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        
+        <nav>
+            <h1>Informatics College Library</h1>
+        <div class="menu-toggle" id="mobile-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+            <button id="home">Home</button>
+            <button id="aboutButton">About</button>
+
+        </nav>
+    </header>
+    <main>
+        <section class="explore">
+            <h2>Explore Resources</h2>
+            <div class="categories-container">
+                <div class="category">
+                    <h3>Senior High School</h3>
+                    <ul>
+                        <li data-subjects="STEM" data-subjects-list="Math, Physics, Chemistry, Biology, Advanced Placement"><a href="#">STEM</a></li>
+                        <li data-subjects="ABM" data-subjects-list="Accountancy, Business Management, Marketing, Economics"><a href="#">ABM</a></li>
+                        <li data-subjects="HUMSS" data-subjects-list="History, Literature, Language, Philosophy, Political Science"><a href="#">HUMSS</a></li>
+                        <li data-subjects="TVL" data-subjects-list="Home Economics, Technology and Livelihood Education, Industrial Arts"><a href="#">TVL</a></li>
+                        <li data-subjects="Arts & Design" data-subjects-list="Music, Visual Arts, Theater Arts, Film and Media"><a href="#">Arts & Design</a></li>
+                    </ul>
+                </div>
+                <div class="category">
+                    <h3>College Programs</h3>
+                    <ul>
+                        <li data-subjects="BS IT" data-subjects-list="Programming Languages, Database Management, Networking, Web Development"><a href="#">BS Information Technology</a></li>
+                        <li data-subjects="BS CS" data-subjects-list="Algorithms, Data Structures, Software Engineering, Artificial Intelligence"><a href="#">BS Computer Science</a></li>
+                        <li data-subjects="BS MIS" data-subjects-list="Information Systems Management, Business Analysis, Project Management, Data Analytics"><a href="#">BS Management Information Systems</a></li>
+                        <li data-subjects="BS EE" data-subjects-list="Circuit Analysis, Electronics, Power Systems, Control Systems"><a href="#">BS Electrical Engineering</a></li>
+                        <li data-subjects="BS Nursing" data-subjects-list="Anatomy and Physiology, Nursing Fundamentals, Pharmacology, Pathophysiology"><a href="#">BS Nursing</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <section class="subject-list" id="subjects">
+            <!-- The subjects for the selected course/strand will appear here -->
+        </section>
+        <section class="trending-books">
+            <h2>Trending Books</h2>
+            <div class="book-container">
+                <!-- Trending books will appear here -->
+            </div>
+        </section>
+
+        <section id="about" style="display: none;">
+            <h2>About Us</h2>
+            <p>We created this online library to meet the needs of Informatics College students, providing them with easy access to educational resources. Our team, Group 1 of ICT Program Section 1 in Grade 12, worked collaboratively to make learning more convenient and accessible for everyone.</p>
+        </section>
+
+    </main>
+    <footer>
+        &copy; Informatics College
+    </footer>
+    <script src="Online Library.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const bookContainer = document.querySelector(".book-container");
+
+            // Add your trending e-books with titles and content here
+            const trendingBooks = [
+                { title: "The Art of Programming", link: "https://example.com/book1" },
+                { title: "Digital Revolution", link: "https://example.com/book2" },
+                { title: "Data Science Essentials", link: "https://example.com/book3" },
+                { title: "The Future of AI", link: "https://example.com/book4" },
+                { title: "Web Development Masterclass", link: "https://example.com/book5" },
+                { title: "Entrepreneurship Handbook", link: "https://example.com/book6" },
+                { title: "History of Science", link: "https://example.com/book7" },
+                { title: "Space Exploration Chronicles", link: "https://example.com/book8" },
+                { title: "Mystery and Thrillers Collection", link: "https://example.com/book9" },
+                { title: "Artificial Intelligence in Everyday Life", link: "https://example.com/book10" }
+            ];
+
+            // Display trending e-books
+            trendingBooks.forEach(book => {
+                const bookElement = document.createElement("div");
+                bookElement.innerHTML = `<h3 class="book-title">${book.title}</h3><a class="book-link" href="${book.link}" target="_blank">Read E-Book</a>`;
+                bookElement.classList.add("trending-book");
+                bookContainer.appendChild(bookElement);
+            });
+
+            const categoryEls = document.querySelectorAll(".category ul li");
+
+            categoryEls.forEach(categoryEl => {
+                categoryEl.addEventListener("click", event => {
+                    const clickedStrandCourse = event.target.dataset.subjects;
+                    const subjectList = event.target.dataset.subjectsList;
+
+                    document.getElementById("subjects").innerHTML = `<h2>Subjects for ${clickedStrandCourse}</h2>
+                                                                     <ul>${subjectList.split(',').map(subject => 
+                                                                     `<li data-subject="${subject}">
+                                                                        <a class="subject-link" href="#">${subject}</a>
+                                                                        <div class="lesson-content" style="display:none;">
+                                                                            <h3>Lesson for ${subject}</h3>
+                                                                            <p>Lesson content for ${subject} goes here.</p>
+                                                                        </div>
+                                                                     </li>`).join('')}</ul>`;
+                    
+                    const subjectLinks = document.querySelectorAll(".subject-link");
+                    subjectLinks.forEach(subjectLink => {
+                        subjectLink.addEventListener("click", toggleLessonContent);
+                    });
+                });
+            });
+        });
+
+        function toggleLessonContent(event) {
+            const clickedSubject = event.target.closest('li').dataset.subject;
+            const lessonContent = event.target.nextElementSibling;
+
+            const allLessonContents = document.querySelectorAll(".lesson-content");
+            allLessonContents.forEach(content => {
+                if (content !== lessonContent && content.style.display !== "none") {
+                    content.style.display = "none";
+                }
+            });
+
+            lessonContent.style.display = (lessonContent.style.display === "none") ? "block" : "none";
+        }
+
+        <script src="Three lines.js"></script>
+    </script>
+</body>
+
+</html>
